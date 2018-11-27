@@ -14,7 +14,7 @@
 
 
 # After get a json file, you can run the file on terminal
-# python process-new.py --input result.json --output result.xlsx
+# python process.py --input result.json --output result.xlsx
 
 ################################################################
 
