@@ -3,6 +3,6 @@ parser script to process pytorch autograd profiler result, convert json file to 
 
 usage
 
-'''python
+```python
 python process.py --input result.json --output result.xlsx
-'''
+```
