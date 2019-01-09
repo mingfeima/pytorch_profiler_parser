@@ -24,43 +24,43 @@ import argparse
 from  tqdm import tqdm
 def main(args):
 
-	f=open(args.input_file_name,encoding='utf-8')
-	#setting is a array of one dim
-	setting=json.load(f)
-	# getting the total opt name
-	opt_name=[]
-	# save unique opt data
-	dic_unique={}
-	keys=['name','ph','ts','dur','tid','pid']
-	for i in tqdm(range(len(setting))):
-		if 'cat' not in setting[i]:
-			if setting[i]['name']+setting[i]['pid'] not in opt_name:
-				opt_name.append(setting[i]['name']+setting[i]['pid'])
-				dic_unique[setting[i]['name']+setting[i]['pid']]=setting[i]
-				dic_unique[setting[i]['name']+setting[i]['pid']]['call_num']=1
-			else:
-				dic_unique[setting[i]['name']+setting[i]['pid']]['call_num']+=1
-				for key in keys:
-					if isinstance(setting[i][key],float):
-						dic_unique[setting[i]['name']+setting[i]['pid']][key]+=setting[i][key]
+    f = open(args.input_file_name,encoding = 'utf-8')
+    #setting is a array of one dim
+    setting = json.load(f)
+    # getting the total opt name
+    opt_name = []
+    # save unique opt data
+    dic_unique = {}
+    keys = ['name', 'ph', 'ts', 'dur', 'tid', 'pid'] # the call_num is the numbers calls of a function
+    for i in tqdm(range(len(setting))):
+        if 'cat' not in setting[i]:
+            if setting[i]['name'] + setting[i]['pid'] + str(setting[i]['tid']) not in opt_name:
+                opt_name.append(setting[i]['name'] + setting[i]['pid'] + str(setting[i]['tid']))
+                dic_unique[setting[i]['name'] + setting[i]['pid'] + str(setting[i]['tid'])] = setting[i]
+                #print(dic_unique[setting[i]['name']])
+                dic_unique[setting[i]['name'] + setting[i]['pid'] + str(setting[i]['tid'])]['call_num'] = 1
+            else:
+                dic_unique[setting[i]['name'] + setting[i]['pid'] + str(setting[i]['tid'])]['call_num'] += 1  # call_num should add one
+                dic_unique[setting[i]['name'] + setting[i]['pid'] + str(setting[i]['tid'])]['dur'] += setting[i]['dur'] ## add dur time
 
-	keys.append('call_num') #the call_num is the numbers calls of a function
-	Values=[dic_unique[x] for x in opt_name]
+    keys.append('call_num') #the call_num is the numbers calls of a function
+    Values=[dic_unique[x] for x in opt_name]
 
-	workbook = xlsxwriter.Workbook(args.out_file_name)
-	worksheet = workbook.add_worksheet()
 
-	for j in range(len(keys)):
-		worksheet.write(0,j,keys[j])
-		for i in range(len(Values)):
-			worksheet.write(i+1,j,Values[i][keys[j]])
+    workbook = xlsxwriter.Workbook(args.out_file_name)
+    worksheet = workbook.add_worksheet()
 
-	workbook.close()
+    for j in range(len(keys)): # columns
+        worksheet.write(0,j,keys[j])
+        for i in range(len(Values)): # rows
+            worksheet.write(i + 1, j, Values[i][keys[j]])
+
+    workbook.close()
 
 
 if __name__=='__main__':
-	parser = argparse.ArgumentParser(description='manual to this script')
-	parser.add_argument('--input', type=str, default=None)
-	parser.add_argument('--output', type=str, default=None)
-	args = parser.parse_args()
-	main(args)
+    parser = argparse.ArgumentParser(description='manual to this script')
+    parser.add_argument('--input', type=str, default=None)
+    parser.add_argument('--output', type=str, default=None)
+    args = parser.parse_args()
+    main(args)
