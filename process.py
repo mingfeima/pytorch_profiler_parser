@@ -24,7 +24,7 @@ import argparse
 from  tqdm import tqdm
 def main(args):
 
-    f = open(args.input_file_name,encoding = 'utf-8')
+    f = open(args.input,encoding = 'utf-8')
     #setting is a array of one dim
     setting = json.load(f)
     # getting the total opt name
@@ -47,7 +47,7 @@ def main(args):
     Values=[dic_unique[x] for x in opt_name]
 
 
-    workbook = xlsxwriter.Workbook(args.out_file_name)
+    workbook = xlsxwriter.Workbook(args.output)
     worksheet = workbook.add_worksheet()
 
     for j in range(len(keys)): # columns
