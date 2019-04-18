@@ -4,7 +4,7 @@ parser script to process pytorch autograd profiler result, convert json file to 
 ## Performance Profiling on PyTorch
 1. Enable profiler in user code
 ```python
-# To enable GPU profiling, provide cuda=True for profiler()
+# To enable GPU profiling, provide use_cuda=True for profiler()
 withtorch.autograd.profiler.profile() as prof:
     func_()
 prof.export_chrome_trace(“result.json")
