@@ -10,7 +10,7 @@ withtorch.autograd.profiler.profile() as prof:
 prof.export_chrome_trace(“result.json")
 ```
 ####2. Convert the output json record file to a more human friendly excel
-```python
+```bash
 python process.py --input result.json --output result.xlsx
 ```
 OR:
