@@ -7,7 +7,7 @@ parser script to process pytorch autograd profiler result, convert json file to 
 # To enable GPU profiling, provide use_cuda=True for profiler()
 withtorch.autograd.profiler.profile() as prof:
     func_()
-prof.export_chrome_trace(“result.json")
+prof.export_chrome_trace("result.json")
 ```
 ####2. Convert the output json record file to a more human friendly excel
 ```bash
